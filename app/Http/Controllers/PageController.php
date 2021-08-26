@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 
 class PageController extends Controller
 {
@@ -29,20 +34,23 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function dashboardOverview2()
+    public function dashboard_user()
     {
-        return view('pages/dashboard-overview-2');
-    }
+        setlocale(LC_TIME, 'id_ID');
 
-    /**
-     * Show specified view.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function dashboardOverview3()
-    {
-        return view('pages/dashboard-overview-3');
+        $user = User::where('id_anggota', Auth::user()->id_anggota)->get();
+
+        foreach ($user as $data) {
+            $tgl_gabung = date("d-M-Y", strtotime($data->tanggal_bergabung));
+            $nominal = $data->nominal_investasi;
+            $nama = $data->name;
+        };
+
+        return view('pages/user_dashboard', [
+            'nominal_investasi' => number_format($nominal, 2, ',', '.'),
+            'nama' => $nama,
+            'tgl_gabung' => $tgl_gabung,
+        ]);
     }
 
     /**

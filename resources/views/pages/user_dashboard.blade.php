@@ -11,10 +11,9 @@
                 <!-- BEGIN: General Report -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex items-center h-10">
-                        <h2 class="text-lg font-medium truncate mr-5">General Report</h2>
-                        <a href="" class="ml-auto flex items-center text-theme-26 dark:text-theme-33">
-                            <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i> Reload Data
-                        </a>
+                        <h2 class="text-lg font-medium truncate mr-5">Dashboard Laporan Keuangan | {{ $nama }},
+                            Bergabung Pada {{ $tgl_gabung }}</h2>
+
                     </div>
                     <div class="grid grid-cols-12 gap-6 mt-5">
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
@@ -23,7 +22,8 @@
                                     <div class="flex">
                                         <i data-feather="shopping-cart" class="report-box__icon text-theme-21"></i>
                                         <div class="ml-auto">
-                                            <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer" title="33% Higher than last month">
+                                            <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer"
+                                                title="33% Higher than last month">
                                                 33% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i>
                                             </div>
                                         </div>
@@ -39,12 +39,13 @@
                                     <div class="flex">
                                         <i data-feather="credit-card" class="report-box__icon text-theme-22"></i>
                                         <div class="ml-auto">
-                                            <div class="report-box__indicator bg-theme-24 tooltip cursor-pointer" title="2% Lower than last month">
+                                            <div class="report-box__indicator bg-theme-24 tooltip cursor-pointer"
+                                                title="2% Lower than last month">
                                                 2% <i data-feather="chevron-down" class="w-4 h-4 ml-0.5"></i>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-3xl font-medium leading-8 mt-6">Rp 12.450.000</div>
+                                    <div class="text-3xl font-medium leading-8 mt-6">Rp {{ $nominal_investasi }}</div>
                                     <div class="text-base text-gray-600 mt-1">Dana Investasi Anda</div>
                                 </div>
                             </div>
@@ -55,7 +56,8 @@
                                     <div class="flex">
                                         <i data-feather="monitor" class="report-box__icon text-theme-23"></i>
                                         <div class="ml-auto">
-                                            <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer" title="12% Higher than last month">
+                                            <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer"
+                                                title="12% Higher than last month">
                                                 12% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i>
                                             </div>
                                         </div>
@@ -71,7 +73,8 @@
                                     <div class="flex">
                                         <i data-feather="user" class="report-box__icon text-theme-10"></i>
                                         <div class="ml-auto">
-                                            <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer" title="22% Higher than last month">
+                                            <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer"
+                                                title="22% Higher than last month">
                                                 22% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i>
                                             </div>
                                         </div>
@@ -97,12 +100,16 @@
                         <div class="flex flex-col xl:flex-row xl:items-center">
                             <div class="flex">
                                 <div>
-                                    <div class="text-theme-26 dark:text-gray-300 text-lg xl:text-xl font-medium">$15,000</div>
+                                    <div class="text-theme-26 dark:text-gray-300 text-lg xl:text-xl font-medium">$15,000
+                                    </div>
                                     <div class="mt-0.5 text-gray-600 dark:text-gray-600">This Month</div>
                                 </div>
-                                <div class="w-px h-12 border border-r border-dashed border-gray-300 dark:border-dark-5 mx-4 xl:mx-5"></div>
+                                <div
+                                    class="w-px h-12 border border-r border-dashed border-gray-300 dark:border-dark-5 mx-4 xl:mx-5">
+                                </div>
                                 <div>
-                                    <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">$10,000</div>
+                                    <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">$10,000
+                                    </div>
                                     <div class="mt-0.5 text-gray-600 dark:text-gray-600">Last Month</div>
                                 </div>
                             </div>
@@ -112,11 +119,17 @@
                                 </button>
                                 <div class="dropdown-menu w-40">
                                     <div class="dropdown-menu__content box dark:bg-dark-1 p-2 overflow-y-auto h-32">
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">PC & Laptop</a>
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Smartphone</a>
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Electronic</a>
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Photography</a>
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Sport</a>
+                                        <a href=""
+                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">PC
+                                            & Laptop</a>
+                                        <a href=""
+                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Smartphone</a>
+                                        <a href=""
+                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Electronic</a>
+                                        <a href=""
+                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Photography</a>
+                                        <a href=""
+                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Sport</a>
                                     </div>
                                 </div>
                             </div>
@@ -188,9 +201,9 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
-        
+
     </div>
 @endsection

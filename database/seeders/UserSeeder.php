@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -17,18 +18,20 @@ class UserSeeder extends Seeder
     {
         // Default credentials
         \App\Models\User::insert([
-            [ 
-                'name' => 'Left4code',
-                'email' => 'midone@left4code.com',
+            [
+                'id_anggota' => '201643500578',
+                'name' => 'Guruh Rachmat Pribadi',
+                'tanggal_bergabung' => '2021-07-23',
+                'nominal_investasi' => '5000000',
+                'email' => 'investor1@mail.com',
                 'email_verified_at' => now(),
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'gender' => 'male',
+                'password' => Hash::make('12345678'), // password
                 'active' => 1,
                 'remember_token' => Str::random(10)
             ]
         ]);
 
         // Fake users
-        User::factory()->times(9)->create();
+        //  User::factory()->times(9)->create();
     }
 }

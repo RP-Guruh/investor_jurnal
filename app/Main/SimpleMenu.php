@@ -27,7 +27,7 @@ class SimpleMenu
                     ],
                     'dashboard-overview-2' => [
                         'icon' => '',
-                        'route_name' => 'dashboard-overview-2',
+                        'route_name' => 'user_dashboard',
                         'params' => [
                             'layout' => 'simple-menu',
                         ],
