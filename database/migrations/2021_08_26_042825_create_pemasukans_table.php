@@ -15,6 +15,11 @@ class CreatePemasukansTable extends Migration
     {
         Schema::create('pemasukans', function (Blueprint $table) {
             $table->id();
+            $table->string('id_pemasukan');
+            $table->string('id_anggota');
+            $table->string('nama_anggota');
+            $table->string('nominal');
+            $table->date('tanggal_pemasukan');
             $table->timestamps();
         });
     }

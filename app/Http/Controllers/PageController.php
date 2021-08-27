@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\Pemasukan;
 
 
 class PageController extends Controller
@@ -39,7 +40,10 @@ class PageController extends Controller
         setlocale(LC_TIME, 'id_ID');
 
         $user = User::where('id_anggota', Auth::user()->id_anggota)->get();
-
+        $jumlah_investor = User::where('status', 'investor')->count();
+        $total_pendapatan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->sum('nominal');
+        $riwayat_pemasukan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->orderBy('tanggal_pemasukan')->paginate(10);
+        $jumlah_dana_investasi = User::where('status', 'investor')->sum('nominal_investasi');
         foreach ($user as $data) {
             $tgl_gabung = date("d-M-Y", strtotime($data->tanggal_bergabung));
             $nominal = $data->nominal_investasi;
@@ -50,6 +54,11 @@ class PageController extends Controller
             'nominal_investasi' => number_format($nominal, 2, ',', '.'),
             'nama' => $nama,
             'tgl_gabung' => $tgl_gabung,
+            'jumlah_investor' => $jumlah_investor,
+            'jumlah_pendapatan' => number_format($total_pendapatan, 2, ',', '.'),
+            'riwayat_pemasukan' => $riwayat_pemasukan,
+            'jumlah_dana_investasi' => number_format($jumlah_dana_investasi, 2, ',', '.'),
+
         ]);
     }
 
