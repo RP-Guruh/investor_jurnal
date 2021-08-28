@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DarkModeController;
 
 /*
@@ -28,6 +29,16 @@ Route::middleware('loggedin')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/', [PageController::class, 'dashboard_user'])->name('user_dashboard');
+    Route::get('profil', [PageController::class, 'profil_user'])->name('profil_user');
+    Route::get('/profil/edit/{id}', [PageController::class, 'profil_edit']);
+    Route::post('/process/edit/profil', [PageController::class, 'profil_process']);
+
+
+    // ADMIN ROUTE (START)
+    Route::get('/admin', [AdminController::class, 'home'])->name('admin_dashboard');
+    // END
+
+
     Route::get('dashboard-overview-3-page', [PageController::class, 'dashboardOverview3'])->name('dashboard-overview-3');
     Route::get('inbox-page', [PageController::class, 'inbox'])->name('inbox');
     Route::get('file-manager-page', [PageController::class, 'fileManager'])->name('file-manager');
@@ -40,7 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::get('users-layout-1-page', [PageController::class, 'usersLayout1'])->name('users-layout-1');
     Route::get('users-layout-2-page', [PageController::class, 'usersLayout2'])->name('users-layout-2');
     Route::get('users-layout-3-page', [PageController::class, 'usersLayout3'])->name('users-layout-3');
-    Route::get('profile-overview-1-page', [PageController::class, 'profileOverview1'])->name('profile-overview-1');
     Route::get('profile-overview-2-page', [PageController::class, 'profileOverview2'])->name('profile-overview-2');
     Route::get('profile-overview-3-page', [PageController::class, 'profileOverview3'])->name('profile-overview-3');
     Route::get('wizard-layout-1-page', [PageController::class, 'wizardLayout1'])->name('wizard-layout-1');

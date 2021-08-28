@@ -2,6 +2,8 @@
 
 namespace App\Main;
 
+use Illuminate\Support\Facades\Auth;
+
 class SideMenu
 {
     /**
@@ -12,37 +14,93 @@ class SideMenu
      */
     public static function menu()
     {
-        return [
-            'dashboard' => [
-                'icon' => 'home',
-                'title' => 'Dashboard',
-                'route_name' => 'user_dashboard',
-                'params' => [
-                    'layout' => 'side-menu',
-                ],
-            ],
+
+        if (Auth::check()) {
+            if (Auth::user()->status == "investor") {
+                return [
+                    'dashboard' => [
+                        'icon' => 'home',
+                        'title' => 'Dashboard',
+                        'route_name' => 'user_dashboard',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
 
 
-            'file-manager' => [
-                'icon' => 'hard-drive',
-                'route_name' => 'file-manager',
-                'params' => [
-                    'layout' => 'side-menu'
-                ],
-                'title' => 'File Laporan Keuangan'
-            ],
+                    'file-manager' => [
+                        'icon' => 'hard-drive',
+                        'route_name' => 'file-manager',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                        'title' => 'File Laporan Keuangan'
+                    ],
 
-            'devider',
+                    'devider',
 
-            'profile' => [
-                'icon' => 'trello',
-                'title' => 'Lihat Profil',
-                'route_name' => 'profile-overview-1',
-                'params' => [
-                    'layout' => 'side-menu'
-                ],
-            ],
+                    'profile' => [
+                        'icon' => 'trello',
+                        'title' => 'Lihat Profil',
+                        'route_name' => 'profil_user',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                    ],
 
-        ];
+                ];
+            } elseif (Auth::user()->status == "admin") {
+                return [
+                    'dashboard' => [
+                        'icon' => 'home',
+                        'title' => 'Dashboard',
+                        'route_name' => 'admin_dashboard',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+
+
+                    'riwayat-pemasukan-jurnal' => [
+                        'icon' => 'hard-drive',
+                        'route_name' => 'admin_dashboard',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                        'title' => 'Riwayat Pemasukan Jurnal'
+                    ],
+
+                    'riwayat-pemasukan-anggota' => [
+                        'icon' => 'hard-drive',
+                        'route_name' => 'admin_dashboard',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                        'title' => 'Riwayat Pemasukan Anggota'
+                    ],
+
+                    'riwayat-laporan-keuangan' => [
+                        'icon' => 'hard-drive',
+                        'route_name' => 'admin_dashboard',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                        'title' => 'Riwayat Laporan Keuangan'
+                    ],
+
+                    'devider',
+
+                    'anggota' => [
+                        'icon' => 'trello',
+                        'title' => 'Daftar Investor',
+                        'route_name' => 'admin_dashboard',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                    ],
+
+                ];
+            }
+        }
     }
 }
