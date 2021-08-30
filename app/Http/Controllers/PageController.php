@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use App\Models\Pemasukan;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
-
+use Illuminate\Support\Facades\Hash;
 
 class PageController extends Controller
 {
@@ -64,9 +64,13 @@ class PageController extends Controller
 
     public function profil_process(Request $request)
     {
+
+        $password_lama = $request->password_old;
+
+
         $rules = [
-            'foto'    => 'mimes:png|required|max:10000', // max 10 MB
-            'nama' => 'required',
+            'foto'    => 'mimes:jpeg,jpg,png|required|max:10000', // max 10 MB
+            'fullname' => 'required',
             'pekerjaan' => 'required',
             'instansi' => 'required',
             'email' => 'required',
@@ -79,7 +83,7 @@ class PageController extends Controller
             'foto.required'     => 'Foto harus di upload',
             'foto.max'          => 'Size Foto Terlalu Besar, Max.10MB',
 
-            'nama.required'     => 'Nama harus di isi',
+            'fullname.required'     => 'Nama harus di isi',
             'pekerjaan.required'     => 'Pekerjaan harus di isi',
             'instansi.required'     => 'Instansi harus di isi',
             'email.required'     => 'Email harus di isi',
@@ -90,6 +94,29 @@ class PageController extends Controller
         if ($validator->fails()) {
             toast("Opps :( " . $validator->errors()->first(), 'error');
             return redirect()->back();
+        } else {
+
+            $filenameWithExt = $request->file('foto')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $filenamaSimpan = $filename . '_' . time() . '.' . $extension;
+            $path = $request->file('foto')->storeAs('public/photo_profil', $filenamaSimpan);
+
+            $user = User::find(Auth::user()->id);
+            $user->name = $request->fullname;
+            $user->id_anggota = Auth::user()->id_anggota;
+            $user->no_wa = $request->wa;
+            $user->pekerjaan = $request->pekerjaan;
+            $user->instansi = $request->instansi;
+            $user->email = $request->email;
+            $user->photo = $filenamaSimpan;
+            $user->password = Hash::make($request->password);
+            $user->updated_at = date("Y/m/d h:i:sa");
+            $user->active = "1";
+            $user->save();
+
+            toast("Profil dan Password berhasil diubah", 'success');
+            return redirect('/profil');
         }
     }
 }
