@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
 
     // ADMIN ROUTE (START)
     Route::get('/admin', [AdminController::class, 'home'])->name('admin_dashboard');
+    Route::get('/admin/pemasukan', [AdminController::class, 'pemasukan'])->name('pemasukan');
+    Route::get('/admin/pemasukan/{id}', [AdminController::class, 'pemasukan_anggota']);
     // END
 
 

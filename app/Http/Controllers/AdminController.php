@@ -20,4 +20,21 @@ class AdminController extends Controller
             'user' => $user,
         ]);
     }
+
+    public function pemasukan()
+    {
+        $user = User::where('status', 'investor')->paginate(10);
+
+        return view('admin.riwayat_pemasukan', [
+            'user' => $user,
+        ]);
+    }
+
+    public function pemasukan_anggota(Request $request, $id)
+    {
+        $pemasukan = Pemasukan::where('id_anggota', $id)->paginate(10);
+        return view('admin.pemasukan_anggota', [
+            'pemasukan' => $pemasukan,
+        ]);
+    }
 }

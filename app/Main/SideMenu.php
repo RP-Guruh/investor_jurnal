@@ -60,23 +60,13 @@ class SideMenu
                         ],
                     ],
 
-
-                    'riwayat-pemasukan-jurnal' => [
-                        'icon' => 'hard-drive',
-                        'route_name' => 'admin_dashboard',
-                        'params' => [
-                            'layout' => 'side-menu'
-                        ],
-                        'title' => 'Riwayat Pemasukan Jurnal'
-                    ],
-
                     'riwayat-pemasukan-anggota' => [
                         'icon' => 'hard-drive',
-                        'route_name' => 'admin_dashboard',
+                        'route_name' => 'pemasukan',
                         'params' => [
                             'layout' => 'side-menu'
                         ],
-                        'title' => 'Riwayat Pemasukan Anggota'
+                        'title' => 'Pemasukan Anggota'
                     ],
 
                     'riwayat-laporan-keuangan' => [
