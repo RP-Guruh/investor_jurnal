@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'home'])->name('admin_dashboard');
     Route::get('/admin/pemasukan', [AdminController::class, 'pemasukan'])->name('pemasukan');
     Route::get('/admin/pemasukan/{id}', [AdminController::class, 'pemasukan_anggota']);
+    Route::get('/admin/pemasukan/{id}/form', [AdminController::class, 'form_pemasukan']);
+
     // END
 
 

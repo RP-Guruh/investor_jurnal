@@ -55,7 +55,8 @@
                                                 {{ $item->nama_anggota }} </p>
                                             <a style="background-color: #38a169"
                                                 class="font-bold bg-blue-700 text-white btn btn-blue mb-6"
-                                                href="{{ url('/admin/pemasukan/') }}">Tambah data pemasukan</a>
+                                                href="{{ url('/admin/pemasukan/' . $item->id_anggota . '/form') }}">Tambah
+                                                data pemasukan</a>
 
                                         </div>
 

@@ -37,4 +37,12 @@ class AdminController extends Controller
             'pemasukan' => $pemasukan,
         ]);
     }
+
+    public function form_pemasukan($id)
+    {
+
+        return view('admin.pemasukan_form', [
+            'id' => $id,
+        ]);
+    }
 }
