@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/pemasukan', [AdminController::class, 'pemasukan'])->name('pemasukan');
     Route::get('/admin/pemasukan/{id}', [AdminController::class, 'pemasukan_anggota']);
     Route::get('/admin/pemasukan/{id}/form', [AdminController::class, 'form_pemasukan']);
+    Route::post('/admin/pemasukan/process', [AdminController::class, 'proses_pemasukan']);
+
 
     // END
 

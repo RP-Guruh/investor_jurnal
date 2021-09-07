@@ -46,19 +46,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <div class="content-start">
+                                        <p class="ml-2 font-extrabold text-red-700 text-lg"> ID Anggota :
+                                            {{ $id_anggota }} </p>
+                                        <p class="ml-2 mb-4 font-extrabold text-red-700 text-lg"> Nama Anggota :
+                                            {{ $nama }}
+                                        </p>
+                                        <a style="background-color: #38a169"
+                                            class="font-bold bg-blue-700 text-white btn btn-blue mb-6"
+                                            href="{{ url('/admin/pemasukan/' . $id_anggota . '/form') }}">Tambah
+                                            data pemasukan</a>
 
+                                    </div>
                                     @forelse ($pemasukan as $no => $item)
-                                        <div class="content-start">
-                                            <p class="ml-2 font-extrabold text-red-700 text-lg"> ID Anggota :
-                                                {{ $item->id_anggota }} </p>
-                                            <p class="ml-2 mb-4 font-extrabold text-red-700 text-lg"> Nama Anggota :
-                                                {{ $item->nama_anggota }} </p>
-                                            <a style="background-color: #38a169"
-                                                class="font-bold bg-blue-700 text-white btn btn-blue mb-6"
-                                                href="{{ url('/admin/pemasukan/' . $item->id_anggota . '/form') }}">Tambah
-                                                data pemasukan</a>
 
-                                        </div>
 
 
                                         <tr class="text-black font-bold">
