@@ -40,7 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/pemasukan/{id}', [AdminController::class, 'pemasukan_anggota']);
     Route::get('/admin/pemasukan/{id}/form', [AdminController::class, 'form_pemasukan']);
     Route::post('/admin/pemasukan/process', [AdminController::class, 'proses_pemasukan']);
-
+    Route::get('/admin/pemasukan/{id}/delete/{id_anggota}', [AdminController::class, 'hapus_pemasukan']);
+    Route::get('/admin/pemasukan/{id}/edit/{id_anggota}', [AdminController::class, 'edit_pemasukan']);
+    Route::post('/admin/pemasukan/update', [AdminController::class, 'update_pemasukan']);
+    
 
     // END
 

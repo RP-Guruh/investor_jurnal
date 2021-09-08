@@ -24,8 +24,8 @@ License: You must have a valid license purchased only from themeforest(the above
 
     @yield('head')
 
-    <!-- BEGIN: CSS Assets-->
-    <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}" />
+<!-- BEGIN: CSS Assets-->
+    <link rel="stylesheet" href="/css/app.css" />
     <!-- END: CSS Assets-->
 </head>
 <!-- END: Head -->

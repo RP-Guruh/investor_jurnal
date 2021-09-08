@@ -82,14 +82,14 @@
 
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    <button style="background-color: #4299e1;"
+                                                    <a href="{{url('admin/pemasukan/'.$item->id_pemasukan.'/edit/'.$id_anggota)}}" style="background-color: #4299e1;"
                                                         class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                                                         Edit
-                                                    </button>
-                                                    <button style="background-color: #e53e3e;"
+                                                </a>
+                                                    <a href= "{{url('admin/pemasukan/'.$item->id_pemasukan.'/delete/'.$id_anggota)}}" style="background-color: #e53e3e;"
                                                         class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                                                         Hapus
-                                                    </button>
+                                            </a>
 
                                                 </p>
                                             </td>
