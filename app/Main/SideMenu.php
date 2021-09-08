@@ -71,11 +71,11 @@ class SideMenu
 
                     'riwayat-laporan-keuangan' => [
                         'icon' => 'hard-drive',
-                        'route_name' => 'admin_dashboard',
+                        'route_name' => 'laporan',
                         'params' => [
                             'layout' => 'side-menu'
                         ],
-                        'title' => 'Riwayat Laporan Keuangan'
+                        'title' => 'Laporan Keuangan'
                     ],
 
                     'devider',

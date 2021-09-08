@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Pemasukan;
 use App\Models\User;
+use App\Models\FileLaporan;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -100,5 +101,12 @@ class AdminController extends Controller
         toast("Data pemasukan berhasil di update", 'success');
         return redirect('/admin/pemasukan/' . $request->id_anggota);
                
+    }
+
+    public function laporan() {
+        $file = FileLaporan::paginate(10);
+        return view('admin.laporan', [
+            'laporan' => $file,
+        ]);
     }
 }

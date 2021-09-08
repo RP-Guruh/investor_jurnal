@@ -25,7 +25,7 @@ class TopMenu
 
             'file-manager' => [
                 'icon' => 'hard-drive',
-                'route_name' => 'file-manager',
+                'route_name' => 'laporan',
                 'params' => [
                     'layout' => 'side-menu'
                 ],
