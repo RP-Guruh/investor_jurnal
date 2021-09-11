@@ -66,21 +66,24 @@ class AdminController extends Controller
         $pemasukan->id_anggota = $request->id_anggota;
         $pemasukan->nominal = $request->nominal;
         $pemasukan->tanggal_pemasukan = $request->tgl_pemasukan;
+        $pemasukan->keterangan = $request->keterangan;
         $pemasukan->save();
         toast("Data pemasukan berhasil di input", 'success');
         return redirect('/admin/pemasukan/' . $request->id_anggota);
     }
 
-    public function hapus_pemasukan($id, $id_anggota) {
+    public function hapus_pemasukan($id, $id_anggota)
+    {
         $pemasukan = Pemasukan::where('id_pemasukan', $id)->delete();
-        alert()->success('Berhasil Hapus','Data pemasukan berhasil di hapus');
+        alert()->success('Berhasil Hapus', 'Data pemasukan berhasil di hapus');
         return redirect('/admin/pemasukan/' . $id_anggota);
     }
 
-    public function edit_pemasukan($id, $id_anggota) {
+    public function edit_pemasukan($id, $id_anggota)
+    {
 
         $pemasukan = Pemasukan::where('id_pemasukan', $id)->get();
-    
+
         return view('admin.edit_pemasukan', [
             'id_pemasukan' => $id,
             'id_anggota' => $id_anggota,
@@ -88,25 +91,79 @@ class AdminController extends Controller
         ]);
     }
 
-    public function update_pemasukan(Request $request) {
+    public function update_pemasukan(Request $request)
+    {
         $pemasukan = Pemasukan::where('id_pemasukan', $request->id_pemasukan)
-                    ->update([
-                        'id_pemasukan' => $request->id_pemasukan,
-                        'id_anggota' => $request->id_anggota,
-                        'nominal' =>  $request->nominal,
-                        'tanggal_pemasukan' => $request->tgl_pemasukan,
-                        'keterangan' => $request->keterangan,
-                        'updated_at' => date("Y-m-d h:i:s"),
-                    ]);
+            ->update([
+                'id_pemasukan' => $request->id_pemasukan,
+                'id_anggota' => $request->id_anggota,
+                'nominal' =>  $request->nominal,
+                'tanggal_pemasukan' => $request->tgl_pemasukan,
+                'keterangan' => $request->keterangan,
+                'updated_at' => date("Y-m-d h:i:s"),
+            ]);
         toast("Data pemasukan berhasil di update", 'success');
         return redirect('/admin/pemasukan/' . $request->id_anggota);
-               
     }
 
-    public function laporan() {
-        $file = FileLaporan::paginate(10);
+    public function laporan()
+    {
+        $file = FileLaporan::orderBy('tanggal_upload', 'desc')->paginate(10);
         return view('admin.laporan', [
             'laporan' => $file,
         ]);
+    }
+
+    public function form_laporan()
+    {
+
+        return view('admin.form_laporan');
+    }
+
+    public function process_laporan(Request $request)
+    {
+
+        $pin = mt_rand(10000, 99999)
+            . mt_rand(10000, 99999);
+        $string = "REPORT-" . str_shuffle($pin);
+
+        $file = new FileLaporan();
+        $file->id = null;
+        $file->id_laporan = $string;
+        $file->link = $request->link_file;
+        $file->tanggal_upload = $request->tgl_laporan;
+        $file->keterangan = $request->keterangan;
+        $file->save();
+
+        toast("Data Laporan Berhasil Ditambah", 'success');
+        return redirect('/admin/laporan/');
+    }
+
+    public function edit_laporan($id)
+    {
+        $file = FileLaporan::where('id_laporan', $id)->get();
+        return view('admin.edit_laporan', [
+            'laporan' => $file,
+        ]);
+    }
+
+    public function update_laporan(Request $request)
+    {
+        $file = FileLaporan::where('id_laporan', $request->id_laporan)
+            ->update([
+                'id_laporan' => $request->id_laporan,
+                'link' =>  $request->link_file,
+                'tanggal_upload' => $request->tgl_laporan,
+                'keterangan' => $request->keterangan,
+                'updated_at' => date("Y-m-d h:i:s"),
+            ]);
+        toast("Data laporan berhasil di update", 'success');
+        return redirect('/admin/laporan');
+    }
+
+    public function delete_laporan($id) {
+        $file = FileLaporan::where('id_laporan', $id)->delete();
+        alert()->success('Berhasil Hapus', 'Data laporan berhasil di hapus');
+        return redirect('/admin/laporan');
     }
 }

@@ -41,13 +41,15 @@
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                             Link
                                         </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Tipe File
-                                        </th>
+                                       
                                         <th
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                             Tanggal Upload
+                                        </th>
+
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Keterangan
                                         </th>
                                         
                                         <th
@@ -70,16 +72,18 @@
                                                     {{ $item->id_laporan }}</p>
                                             </td>
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $item->link }}</p>
+                                                <a href="{{ $item->link }}" class="whitespace-no-wrap" style="color:blue; font-weight:bold; text-decoration:underline">
+                                                  Link File  </a>
                                             </td>
+                                           
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $item->tipe_file }}</p>
+                                                {{ Carbon\Carbon::parse($item->tanggal_upload)->format('d-M-Y') }}</p>
                                             </td>
+
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $item->tanggal_upload }}</p>
+                                                    {{ $item->keterangan }}</p>
                                             </td>
                                             
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
