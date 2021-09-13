@@ -10,6 +10,7 @@ use App\Models\FileLaporan;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -165,5 +166,37 @@ class AdminController extends Controller
         $file = FileLaporan::where('id_laporan', $id)->delete();
         alert()->success('Berhasil Hapus', 'Data laporan berhasil di hapus');
         return redirect('/admin/laporan');
+    }
+
+    public function form_investor() {
+        return view('admin.investor_form');
+    }
+
+    public function add_investor(Request $request) {
+        $pin = mt_rand(10000, 99999)
+            . mt_rand(10000, 99999);
+        $string = "USER-" . str_shuffle($pin);
+        $user = new User();
+        $user->id = null;
+        $user->id_anggota = $string;
+        $user->name = $request->nama;
+        $user->nominal_investasi = $request->nominal;
+        $user->status = "investor";
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->tanggal_bergabung = $request->tanggal_gabung;
+        $user->active = "0";
+        
+
+        $user->save();
+
+        toast("Data investor berhasil ditambah", 'success');
+        return redirect('/admin');
+    }
+
+    public function delete_investor($id) {
+        $user = User::where('id_anggota', $id)->delete();
+        alert()->success('Berhasil Hapus', 'Data anggota investor berhasil di hapus');
+        return redirect('/admin');
     }
 }

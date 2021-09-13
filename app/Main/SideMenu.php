@@ -82,8 +82,8 @@ class SideMenu
 
                     'anggota' => [
                         'icon' => 'trello',
-                        'title' => 'Daftar Investor',
-                        'route_name' => 'admin_dashboard',
+                        'title' => 'Tambah Investor',
+                        'route_name' => 'tambah_investor',
                         'params' => [
                             'layout' => 'side-menu'
                         ],

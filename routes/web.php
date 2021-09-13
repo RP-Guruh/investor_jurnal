@@ -51,7 +51,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/laporan/update', [AdminController::class, 'update_laporan']);
     Route::get('/admin/laporan/{id}/delete', [AdminController::class, 'delete_laporan']);
     
-
+    Route::get('/admin/add/investor', [AdminController::class, 'form_investor'])->name('tambah_investor');
+    Route::post('/admin/investor/process', [AdminController::class, 'add_investor']);
+    Route::get('/admin/investor/{id}/delete', [AdminController::class, 'delete_investor']);
+    
     // END
 
 
