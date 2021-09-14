@@ -22,24 +22,28 @@ class PageController extends Controller
         $user = User::where('id_anggota', Auth::user()->id_anggota)->get();
         $jumlah_investor = User::where('status', 'investor')->count();
         $total_pendapatan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->sum('nominal');
-        $riwayat_pemasukan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->orderBy('tanggal_pemasukan')->paginate(10);
+        $riwayat_pemasukan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->orderBy('tanggal_pemasukan', 'DESC')->paginate(10);
+        
         $jumlah_dana_investasi = User::where('status', 'investor')->sum('nominal_investasi');
         foreach ($user as $data) {
             $tgl_gabung = date("d-M-Y", strtotime($data->tanggal_bergabung));
             $nominal = $data->nominal_investasi;
             $nama = $data->name;
         };
+        
+
+        // Nominal investasi + Pemasukan
+        $pendapatan_beserta_nominal = $total_pendapatan + $nominal;
 
         if (Auth::user()->status == "investor") {
             return view('pages/user_dashboard', [
                 'nominal_investasi' => number_format($nominal, 2, ',', '.'),
                 'nama' => $nama,
                 'tgl_gabung' => $tgl_gabung,
-                'jumlah_investor' => $jumlah_investor,
-                'jumlah_pendapatan' => number_format($total_pendapatan, 2, ',', '.'),
+                'total_pemasukan' => number_format($total_pendapatan, 2, ',', '.'),
+                'jumlah_pendapatan' => number_format($pendapatan_beserta_nominal, 2, ',', '.'),
                 'riwayat_pemasukan' => $riwayat_pemasukan,
                 'jumlah_dana_investasi' => number_format($jumlah_dana_investasi, 2, ',', '.'),
-
             ]);
         } else {
             return redirect()->route('admin_dashboard');
