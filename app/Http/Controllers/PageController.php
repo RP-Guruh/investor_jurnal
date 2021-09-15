@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Pemasukan;
+use App\Models\FileLaporan;
+use App\Models\klaim_dana;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -33,9 +36,10 @@ class PageController extends Controller
         
 
         // Nominal investasi + Pemasukan
-        $pendapatan_beserta_nominal = $total_pendapatan + $nominal;
-
+        
         if (Auth::user()->status == "investor") {
+            $pendapatan_beserta_nominal = $total_pendapatan + $nominal;
+
             return view('pages/user_dashboard', [
                 'nominal_investasi' => number_format($nominal, 2, ',', '.'),
                 'nama' => $nama,
@@ -122,5 +126,46 @@ class PageController extends Controller
             toast("Profil dan Password berhasil diubah", 'success');
             return redirect('/profil');
         }
+    }
+
+    public function laporan() {
+        $laporan = FileLaporan::orderBy('tanggal_upload', 'DESC')->paginate(20);
+        return view('pages.file_laporan', [
+            'laporan' => $laporan,
+        ]);
+    }
+
+    public function klaim_form() {
+        return view('pages.form_klaim');
+    }
+
+    public function klaim_proses(Request $request) {
+      $total_pendapatan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->sum('nominal');
+      $nominal = $request->nominal_klaim;
+
+      if($nominal >= $total_pendapatan) {
+        toast("Saldo pemasukan tidak mencukupi", 'error');
+        return redirect()->back();
+
+        }
+      else {
+        $pin = mt_rand(10000, 99999)
+        . mt_rand(10000, 99999);
+        $string = "KLAIM-" . str_shuffle($pin);
+
+        $klaim = new klaim_dana();
+        $klaim->id = null;
+        $klaim->id_klaim = $string;
+        $klaim->id_anggota = Auth::user()->id_anggota;
+        $klaim->id_klaim = $string;
+        $klaim->tanggal_klaim = date("Y/m/d");
+        $klaim->nominal = $nominal;
+        $klaim->keterangan = $keterangan;
+        $klaim->status = "Menunggu verifikasi admin";
+        
+        toast("Sukses", 'success');
+        return redirect()->back();
+      }
+
     }
 }

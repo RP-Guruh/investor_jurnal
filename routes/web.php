@@ -32,7 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('profil', [PageController::class, 'profil_user'])->name('profil_user');
     Route::get('/profil/edit/{id}', [PageController::class, 'profil_edit']);
     Route::post('/process/edit/profil', [PageController::class, 'profil_process']);
-
+    Route::get('/laporan', [PageController::class, 'laporan'])->name('laporan_keuangan');
+    Route::get('/klaim/form', [PageController::class, 'klaim_form'])->name('form_klaim');
+    Route::post('/klaim/process', [PageController::class, 'klaim_proses']);
+    
 
     // ADMIN ROUTE (START)
     Route::get('/admin', [AdminController::class, 'home'])->name('admin_dashboard');
@@ -54,6 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/add/investor', [AdminController::class, 'form_investor'])->name('tambah_investor');
     Route::post('/admin/investor/process', [AdminController::class, 'add_investor']);
     Route::get('/admin/investor/{id}/delete', [AdminController::class, 'delete_investor']);
+    
+    
     
     // END
 

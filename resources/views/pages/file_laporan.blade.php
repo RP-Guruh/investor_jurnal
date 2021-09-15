@@ -1,7 +1,7 @@
 @extends('../layout/' . $layout)
 
 @section('subhead')
-    <title>Dashboard - Icewall - Tailwind HTML Admin Template</title>
+    <title>Laporan Keuangan</title>
 @endsection
 
 @section('subcontent')
@@ -10,10 +10,6 @@
             <div class="grid grid-cols-12 gap-6">
                 <!-- BEGIN: General Report -->
                 <div class="col-span-12 mt-8">
-                    <div class="intro-y flex items-center h-10">
-                        <h2 class="text-lg font-medium truncate mr-5">Dashboard Laporan Keuangan,
-                    </div>
-                       
                     </div>
                 </div>
 
@@ -41,13 +37,14 @@
                                     @forelse ($laporan as $no => $item)
                                         <tr class="font-bold">
                                             <td class="border-b dark:border-dark-5">
-                                                {{ $riwayat_pemasukan->firstItem() + $no }}</td>
-                                            <td class="border-b dark:border-dark-5">{{ $item->id_pemasukan }}</td>
+                                                {{ $laporan->firstItem() + $no }}</td>
+                                            <td class="border-b dark:border-dark-5">{{ $item->id_laporan }}</td>
                                             <td class="border-b dark:border-dark-5">
-                                                {{ Carbon\Carbon::parse($item->tanggal_pemasukan)->format('d - M - Y') }}
+                                                {{ Carbon\Carbon::parse($item->tanggal_upload)->format('d - M - Y') }}
                                             </td>
-                                            <td class="border-b dark:border-dark-5">
-                                                {{ number_format($item->nominal, 2, ',', '.') }}</td>
+                                            <td class="border-b dark:border-dark-5"><a href="{{$item->link}}" target="_BLANK">Link Laporan</a></td>
+                                            <td class="border-b dark:border-dark-5">{{ $item->keterangan }}</td>
+                                            
                                         </tr>
 
                                     @empty
@@ -57,6 +54,7 @@
 
                                 </tbody>
                             </table>
+                            {{ $laporan->links() }}
                         </div>
                     </div>
                 </div>

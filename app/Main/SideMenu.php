@@ -30,12 +30,22 @@ class SideMenu
 
                     'file-manager' => [
                         'icon' => 'hard-drive',
-                        'route_name' => 'file-manager',
+                        'route_name' => 'laporan_keuangan',
                         'params' => [
                             'layout' => 'side-menu'
                         ],
-                        'title' => 'File Laporan Keuangan'
+                        'title' => 'Laporan Keuangan'
                     ],
+                    
+                    'kalim_dana' => [
+                        'icon' => 'hard-drive',
+                        'route_name' => 'form_klaim',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                        'title' => 'Klaim dana'
+                    ],
+
 
                     'devider',
 

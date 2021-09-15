@@ -98,22 +98,6 @@
                                         </th>
                                         <th
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Pekerjaan
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Instansi
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            No.WA
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Email
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                             Nominal Investasi
                                         </th>
                                         <th
@@ -147,26 +131,7 @@
                                                     {{ $item->name }}</p>
                                             </td>
 
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $item->pekerjaan }}</p>
-                                            </td>
-
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $item->instansi }}</p>
-                                            </td>
-
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $item->no_wa }}</p>
-                                            </td>
-
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $item->email }}</p>
-                                            </td>
-
+                                          
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                 <p class="text-gray-900 whitespace-no-wrap">
                                                     {{ $item->nominal_investasi }}</p>
@@ -181,6 +146,10 @@
                                                 <p class="text-gray-900 whitespace-no-wrap">
                                                     <a href="{{url('admin/investor/'.$item->id_anggota.'/delete')}}" style="background-color: #4299e1;"
                                                         class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                                    Detail
+                                                </a>   
+                                                <a href="{{url('admin/investor/'.$item->id_anggota.'/delete')}}" style="background-color: #4299e1;"
+                                                        class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                                                     Hapus
                                                 </a>
                                                 </p>
@@ -189,13 +158,13 @@
 
                                         </tr>
                                     @empty
-
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">Belum ada investor</p>
+                                    </td>
                                     @endforelse
-
-
                                 </tbody>
                             </table>
-
+                            {{ $user->links() }}
                         </div>
                     </div>
 
