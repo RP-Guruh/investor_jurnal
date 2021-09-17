@@ -26,17 +26,17 @@ class PageController extends Controller
         $jumlah_investor = User::where('status', 'investor')->count();
         $total_pendapatan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->sum('nominal');
         $riwayat_pemasukan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->orderBy('tanggal_pemasukan', 'DESC')->paginate(10);
-        
+
         $jumlah_dana_investasi = User::where('status', 'investor')->sum('nominal_investasi');
         foreach ($user as $data) {
             $tgl_gabung = date("d-M-Y", strtotime($data->tanggal_bergabung));
             $nominal = $data->nominal_investasi;
             $nama = $data->name;
         };
-        
+
 
         // Nominal investasi + Pemasukan
-        
+
         if (Auth::user()->status == "investor") {
             $pendapatan_beserta_nominal = $total_pendapatan + $nominal;
 
@@ -128,44 +128,64 @@ class PageController extends Controller
         }
     }
 
-    public function laporan() {
-        $laporan = FileLaporan::orderBy('tanggal_upload', 'DESC')->paginate(20);
+    public function laporan()
+    {
+        $laporan = FileLaporan::orderBy('tanggal_upload', 'DESC')->paginate(1);
         return view('pages.file_laporan', [
             'laporan' => $laporan,
         ]);
     }
 
-    public function klaim_form() {
+    public function klaim_form()
+    {
+
+        $klaim =  klaim_dana::where('id_anggota', Auth::user()->id_anggota)->orderBy('tanggal_klaim', 'DESC')->paginate(20);
+        return view('pages.riwayat_klaim', [
+            'klaim' => $klaim,
+        ]);
+    }
+
+    public function form_klaim()
+    {
         return view('pages.form_klaim');
     }
 
-    public function klaim_proses(Request $request) {
-      $total_pendapatan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->sum('nominal');
-      $nominal = $request->nominal_klaim;
+    public function hapus_klaim($id) {
+        $klaim = klaim_dana::where('id_klaim',$id);
+        $klaim->delete();
+        toast("Data klaim berhasil di hapus", 'success');
+        return redirect('/klaim/form');
+    }
 
-      if($nominal >= $total_pendapatan) {
-        toast("Saldo pemasukan tidak mencukupi", 'error');
-        return redirect()->back();
+    public function klaim_proses(Request $request)
+    {
+        $total_pendapatan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->sum('nominal');
+        $nominal = $request->nominal_klaim;
 
+        if ($nominal >= $total_pendapatan) {
+            toast("Saldo pemasukan tidak mencukupi", 'error');
+            return redirect()->back();
+        } else {
+            $pin = mt_rand(10000, 99999)
+                . mt_rand(10000, 99999);
+            $string = "KLAIM-" . str_shuffle($pin);
+
+            $klaim = new klaim_dana();
+            $klaim->id = null;
+            $klaim->id_klaim = $string;
+            $klaim->id_anggota = Auth::user()->id_anggota;
+            $klaim->id_klaim = $string;
+            $klaim->tanggal_klaim = date("Y/m/d");
+            $klaim->nominal = $nominal;
+            if($klaim->keterangan == null) {
+                $klaim->keterangan = "Tidak ada keterangan";
+            }
+            
+            $klaim->keterangan = $request->keterangan;
+            $klaim->status = "Menunggu verifikasi admin";
+            $klaim->save();
+            toast("Sukses", 'success');
+            return redirect('/klaim/form');
         }
-      else {
-        $pin = mt_rand(10000, 99999)
-        . mt_rand(10000, 99999);
-        $string = "KLAIM-" . str_shuffle($pin);
-
-        $klaim = new klaim_dana();
-        $klaim->id = null;
-        $klaim->id_klaim = $string;
-        $klaim->id_anggota = Auth::user()->id_anggota;
-        $klaim->id_klaim = $string;
-        $klaim->tanggal_klaim = date("Y/m/d");
-        $klaim->nominal = $nominal;
-        $klaim->keterangan = $keterangan;
-        $klaim->status = "Menunggu verifikasi admin";
-        
-        toast("Sukses", 'success');
-        return redirect()->back();
-      }
-
     }
 }

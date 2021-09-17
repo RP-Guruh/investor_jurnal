@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/process/edit/profil', [PageController::class, 'profil_process']);
     Route::get('/laporan', [PageController::class, 'laporan'])->name('laporan_keuangan');
     Route::get('/klaim/form', [PageController::class, 'klaim_form'])->name('form_klaim');
+    Route::get('/form/klaim/baru', [PageController::class, 'form_klaim']);
+    Route::get('/form/klaim/hapus/{id}', [PageController::class, 'hapus_klaim']);
+    
     Route::post('/klaim/process', [PageController::class, 'klaim_proses']);
     
 

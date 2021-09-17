@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="text-right mt-5">
-                        <a href="{{url('admin/laporan')}}" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
+                        <a href="{{url('klaim/form')}}" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
                         <button type="submit" class="btn btn-primary w-24">Save</button>
                     </div>
                 </form>
