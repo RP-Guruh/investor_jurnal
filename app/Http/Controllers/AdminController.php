@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pemasukan;
 use App\Models\User;
 use App\Models\FileLaporan;
-
+use App\Models\klaim_dana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -198,5 +198,23 @@ class AdminController extends Controller
         $user = User::where('id_anggota', $id)->delete();
         alert()->success('Berhasil Hapus', 'Data anggota investor berhasil di hapus');
         return redirect('/admin');
+    }
+
+    public function klaim_riwayat()
+    {
+        $klaim =  klaim_dana::orderBy('tanggal_klaim', 'DESC')->paginate(20);
+        return view('admin.riwayat_klaim', [
+            'klaim' => $klaim,
+        ]);
+    }
+
+    public function konfirmasi_klaim($id) {
+        klaim_dana::where('id_klaim', $id)
+        ->update(['updated_at' => date("Y/m/d"),
+                  'status' => "Disetujui"]);
+      
+        
+        alert()->success('Berhasil Disetujui', 'Pengajuan klaim dana di setujui');
+        return redirect('admin/klaim/dana');
     }
 }

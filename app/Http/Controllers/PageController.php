@@ -130,7 +130,7 @@ class PageController extends Controller
 
     public function laporan()
     {
-        $laporan = FileLaporan::orderBy('tanggal_upload', 'DESC')->paginate(1);
+        $laporan = FileLaporan::orderBy('tanggal_upload', 'DESC')->paginate(10);
         return view('pages.file_laporan', [
             'laporan' => $laporan,
         ]);
@@ -174,6 +174,8 @@ class PageController extends Controller
             $klaim->id = null;
             $klaim->id_klaim = $string;
             $klaim->id_anggota = Auth::user()->id_anggota;
+            $klaim->nama = Auth::user()->name;
+            
             $klaim->id_klaim = $string;
             $klaim->tanggal_klaim = date("Y/m/d");
             $klaim->nominal = $nominal;

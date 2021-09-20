@@ -88,6 +88,15 @@ class SideMenu
                         'title' => 'Laporan Keuangan'
                     ],
 
+                    'klaim-dana' => [
+                        'icon' => 'hard-drive',
+                        'route_name' => 'klaim_dana',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                        'title' => 'Klaim Dana'
+                    ],
+
                     'devider',
 
                     'anggota' => [
