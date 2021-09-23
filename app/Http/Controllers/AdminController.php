@@ -16,10 +16,18 @@ class AdminController extends Controller
 {
     public function home()
     {
-        $user = User::where('status', 'investor')->paginate(10);
+        $user = User::where('status', 'investor')->orderBy('tanggal_bergabung', 'DESC')->paginate(10);
 
+        // Menghitung dana investor terkumpul
+           $nominal_investasi =  User::where('status', 'investor')->sum('nominal_investasi');
+        
+        // Menghitung jumlah investor terdaftar
+            $jumlah_investor =  User::where('status', 'investor')->count();
+          
         return view('admin.dashboard', [
             'user' => $user,
+            'jumlah_nominal' => number_format( $nominal_investasi, 0, ',', '.'),
+            'jumlah_investor' => $jumlah_investor,
         ]);
     }
 
@@ -67,7 +75,14 @@ class AdminController extends Controller
         $pemasukan->id_anggota = $request->id_anggota;
         $pemasukan->nominal = $request->nominal;
         $pemasukan->tanggal_pemasukan = $request->tgl_pemasukan;
-        $pemasukan->keterangan = $request->keterangan;
+      
+        if($request->keterangan == null) {
+            $pemasukan->keterangan = "Tidak ada keterangan";
+        }
+        else {
+            $pemasukan->keterangan = $request->keterangan;
+        }
+        
         $pemasukan->save();
         toast("Data pemasukan berhasil di input", 'success');
         return redirect('/admin/pemasukan/' . $request->id_anggota);

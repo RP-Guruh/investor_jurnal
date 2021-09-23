@@ -12,7 +12,7 @@
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex items-center h-10">
                         <h2 class="text-lg font-medium truncate mr-5">Dashboard Laporan Keuangan | {{ $nama }},
-                            Bergabung Pada {{ $tgl_gabung }}</h2>
+                            Bergabung Sejak {{ $tgl_gabung }}</h2>
 
                     </div>
                     <div class="grid grid-cols-12 gap-6 mt-5">
@@ -40,8 +40,8 @@
                                     <div class="flex">
                                         <i data-feather="credit-card" class="report-box__icon text-theme-22"></i>
                                         <div class="ml-auto">
-                                            <div class="report-box__indicator bg-theme-24 tooltip cursor-pointer"
-                                                title="2% Lower than last month">
+                                        <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer"
+                                                title="33% Higher than last month">
                                                 Rupiah
                                             </div>
                                         </div>
@@ -57,9 +57,9 @@
                                     <div class="flex">
                                         <i data-feather="monitor" class="report-box__icon text-theme-23"></i>
                                         <div class="ml-auto">
-                                            <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer"
-                                                title="12% Higher than last month">
-                                                12% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i>
+                                        <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer"
+                                                title="33% Higher than last month">
+                                                Rupiah
                                             </div>
                                         </div>
                                     </div>
@@ -72,12 +72,26 @@
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                             <div class="report-box zoom-in">
                                 <div class="box p-5">
-                                    <div class="flex">
-                                        <i data-feather="user" class="report-box__icon text-theme-10"></i>
-
+                                <div class="flex">
+                                        <i data-feather="monitor" class="report-box__icon text-theme-23"></i>
+                                        <div class="ml-auto">
+                                        <div class="report-box__indicator bg-theme-10 tooltip cursor-pointer"
+                                                title="33% Higher than last month">
+                                                Rupiah
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="text-3xl font-medium leading-8 mt-6"></div>
+                                    <div class="text-3xl font-medium leading-8 mt-6">{{ $dana_klaim }}</div>
                                     <div class="text-base text-gray-600 mt-1">Total Dana Di Klaim</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                            <div class="report-box zoom-in">
+                                <div class="box p-5">
+                               <div class="text-3xl font-medium leading-8 mt-6">12</div>
+                                    <div class="text-base text-gray-600 mt-1">Jumlah Point</div>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +102,6 @@
                 <div class="col-span-12 lg:col-span-12 mt-8">
                     <div class="intro-y block sm:flex items-center h-10">
                         <h2 class="text-lg font-medium truncate mr-5">Tabel Riwayat Pemasukan</h2>
-
                     </div>
                     <div class="intro-y box p-5 mt-12 sm:mt-5">
                      
@@ -99,6 +112,8 @@
                                         <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">No.</th>
                                         <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">ID Pemasukan</th>
                                         <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Tanggal</th>
+                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Keterangan</th>
+                                        
                                         <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Nominal</th>
                                     </tr>
                                 </thead>
@@ -112,6 +127,9 @@
                                                 {{ Carbon\Carbon::parse($item->tanggal_pemasukan)->format('d - M - Y') }}
                                             </td>
                                             <td class="border-b dark:border-dark-5">
+                                                {{ $item->keterangan }}</td>
+                                            
+                                            <td class="border-b dark:border-dark-5">
                                                 {{ number_format($item->nominal, 2, ',', '.') }}</td>
                                         </tr>
 
@@ -123,7 +141,10 @@
                                 </tbody>
                             </table>
                         </div>
+                      
                     </div>
+                    <br>
+                    {{ $riwayat_pemasukan->links() }}
                 </div>
 
             </div>

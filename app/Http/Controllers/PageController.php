@@ -22,6 +22,13 @@ class PageController extends Controller
     {
         setlocale(LC_TIME, 'id_ID');
 
+        // Mendapatkan total klaim
+        $dana_klaim = klaim_dana::where([
+            ['id_anggota', Auth::user()->id_anggota],
+            ['status', 'Disetujui']
+        ])->sum('nominal');
+
+
         $user = User::where('id_anggota', Auth::user()->id_anggota)->get();
         $jumlah_investor = User::where('status', 'investor')->count();
         $total_pendapatan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->sum('nominal');
@@ -38,16 +45,17 @@ class PageController extends Controller
         // Nominal investasi + Pemasukan
 
         if (Auth::user()->status == "investor") {
-            $pendapatan_beserta_nominal = $total_pendapatan + $nominal;
+            $pendapatan_beserta_nominal = $total_pendapatan + $nominal; //- $dana_klaim
 
             return view('pages/user_dashboard', [
-                'nominal_investasi' => number_format($nominal, 2, ',', '.'),
+                'nominal_investasi' => number_format($nominal, 0, ',', '.'),
                 'nama' => $nama,
                 'tgl_gabung' => $tgl_gabung,
-                'total_pemasukan' => number_format($total_pendapatan, 2, ',', '.'),
-                'jumlah_pendapatan' => number_format($pendapatan_beserta_nominal, 2, ',', '.'),
+                'total_pemasukan' => number_format($total_pendapatan - $dana_klaim, 0, ',', '.'),
+                'jumlah_pendapatan' => number_format($pendapatan_beserta_nominal, 0, ',', '.'),
                 'riwayat_pemasukan' => $riwayat_pemasukan,
-                'jumlah_dana_investasi' => number_format($jumlah_dana_investasi, 2, ',', '.'),
+                'jumlah_dana_investasi' => number_format($jumlah_dana_investasi, 0, ',', '.'),
+                'dana_klaim' => number_format($dana_klaim, 0, ',', '.'),
             ]);
         } else {
             return redirect()->route('admin_dashboard');
@@ -150,8 +158,9 @@ class PageController extends Controller
         return view('pages.form_klaim');
     }
 
-    public function hapus_klaim($id) {
-        $klaim = klaim_dana::where('id_klaim',$id);
+    public function hapus_klaim($id)
+    {
+        $klaim = klaim_dana::where('id_klaim', $id);
         $klaim->delete();
         toast("Data klaim berhasil di hapus", 'success');
         return redirect('/klaim/form');
@@ -175,14 +184,14 @@ class PageController extends Controller
             $klaim->id_klaim = $string;
             $klaim->id_anggota = Auth::user()->id_anggota;
             $klaim->nama = Auth::user()->name;
-            
+
             $klaim->id_klaim = $string;
             $klaim->tanggal_klaim = date("Y/m/d");
             $klaim->nominal = $nominal;
-            if($klaim->keterangan == null) {
+            if ($klaim->keterangan == null) {
                 $klaim->keterangan = "Tidak ada keterangan";
             }
-            
+
             $klaim->keterangan = $request->keterangan;
             $klaim->status = "Menunggu verifikasi admin";
             $klaim->save();
