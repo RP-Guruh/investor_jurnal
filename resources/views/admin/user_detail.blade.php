@@ -1,12 +1,12 @@
-@extends('../layout/' . $layout)
+@extends('../admin_layout/' . $layout)
 
 @section('subhead')
-    <title>Regular Form - Icewall - Tailwind HTML Admin Template</title>
+    <title>Investor Profil</title>
 @endsection
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">Form Edit Profil</h2>
+        <h2 class="text-lg font-medium mr-auto">Detail Profil</h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-6">
@@ -21,48 +21,53 @@
                             @foreach ($user as $item)
                                 <div class="mt-3">
                                     <label for="regular-form-2" class="font-bold form-label">Nama Lengkap</label>
-                                    <input name="fullname" id="regular-form-2" type="text"
+                                    <input readonly name="fullname" id="regular-form-2" type="text"
                                         class="form-control form-control-rounded" value="{{ $item->name }}">
                                 </div>
 
                                 <div class="mt-3">
                                     <label for="regular-form-2" class="font-bold form-label">Pekerjaan</label>
-                                    <input name="pekerjaan" id="regular-form-2" type="text"
+                                    <input readonly name="pekerjaan" id="regular-form-2" type="text"
                                         class="form-control form-control-rounded" value="{{ $item->pekerjaan }}">
                                 </div>
 
                                 <div class=" mt-3">
                                     <label for="regular-form-2" class="font-bold form-label">Instansi</label>
-                                    <input name="instansi" id="regular-form-2" type="text"
+                                    <input readonly name="instansi" id="regular-form-2" type="text"
                                         class="form-control form-control-rounded" value="{{ $item->instansi }}">
                                 </div>
 
                                 <div class="mt-3">
                                     <label for="regular-form-2" class="font-bold form-label">Email Aktif</label>
-                                    <input name="email" id="regular-form-2" type="email"
+                                    <input readonly name="email" id="regular-form-2" type="email"
                                         class="form-control form-control-rounded" value="{{ $item->email }}">
                                 </div>
 
                                 <div class="mt-3">
                                     <label for="regular-form-2" class="font-bold form-label">No.Whatsapp Aktif</label>
-                                    <input name="wa" id="regular-form-2" type="text"
+                                    <input readonly name="wa" id="regular-form-2" type="text"
                                         class="form-control form-control-rounded" value="{{ $item->no_wa }}">
                                 </div>
 
                                 <div class="mt-3">
-                                    <label for="regular-form-2" class="font-bold form-label">Password Terbaru </label>
-                                    <input id="regular-form-2" type="text" class="form-control form-control-rounded"
-                                        name="password">
+                                    <label for="regular-form-2" class="font-bold form-label">Nominal Investasi</label>
+                                    <input readonly name="wa" id="regular-form-2" type="text"
+                                        class="form-control form-control-rounded" value="{{ $item->nominal_investasi }}">
+                                </div>
+
+                                <div class="mt-3">
+                                    <label for="regular-form-2" class="font-bold form-label">Status</label>
+                                    <input readonly name="wa" id="regular-form-2" type="text"
+                                        class="form-control form-control-rounded" value="{{ $item->status }}">
                                 </div>
 
                                 <div class="mt-3">
                                     <label for="regular-form-2" class="font-bold form-label">Foto Profil </label>
-                                    <input id="regular-form-2" type="file" class="form-control form-control-rounded"
-                                        name="foto">
+                                    <img alt="Icewall Tailwind HTML Admin Template" class="w-32 h-32"
+                                src="{{ asset('/foto/profil/'.$item->id.'/'. $item->name.'/'. $item->photo) }}">
                                 </div>
 
-                                <input type="submit" value="Update Data"
-                                    class="mt-6 btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">
+                                <a href="{{url('/admin') }}" class="mt-6 btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top"> Kembali </a>
                             @endforeach
 
                         </form>

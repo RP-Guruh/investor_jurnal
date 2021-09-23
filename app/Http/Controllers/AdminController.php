@@ -232,4 +232,12 @@ class AdminController extends Controller
         alert()->success('Berhasil Disetujui', 'Pengajuan klaim dana di setujui');
         return redirect('admin/klaim/dana');
     }
+
+    public function investor_profil($id) {
+        $user = User::where('id_anggota', $id)->get();
+        return view('admin.user_detail', [
+            'user' => $user,
+        ]);
+
+    }
 }

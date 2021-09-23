@@ -103,7 +103,7 @@ class PageController extends Controller
             'pekerjaan.required'     => 'Pekerjaan harus di isi',
             'instansi.required'     => 'Instansi harus di isi',
             'email.required'     => 'Email harus di isi',
-            'wa.required'     => 'WA harus di isid',
+            'wa.required'     => 'WA harus di isi',
             'password.required'     => 'Password harus di isi',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -111,12 +111,14 @@ class PageController extends Controller
             toast("Opps :( " . $validator->errors()->first(), 'error');
             return redirect()->back();
         } else {
-
-            $filenameWithExt = $request->file('foto')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('foto')->getClientOriginalExtension();
-            $filenamaSimpan = $filename . '_' . time() . '.' . $extension;
-            $path = $request->file('foto')->storeAs('public/photo_profil', $filenamaSimpan);
+            $file = Request()->foto;
+    
+            $path = public_path() . '/foto/profil/' . Auth::user()->id . '/' . Auth::user()->name;
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0777, true, false);
+            }
+            $namaFile = 'foto_'.Auth::user()->name .'.' . $file->extension();
+            $file->move(public_path('/foto/profil/' . Auth::user()->id . '/' . Auth::user()->name),  $namaFile);
 
             $user = User::find(Auth::user()->id);
             $user->name = $request->fullname;
@@ -125,7 +127,7 @@ class PageController extends Controller
             $user->pekerjaan = $request->pekerjaan;
             $user->instansi = $request->instansi;
             $user->email = $request->email;
-            $user->photo = $filenamaSimpan;
+            $user->photo = $namaFile;
             $user->password = Hash::make($request->password);
             $user->updated_at = date("Y/m/d h:i:sa");
             $user->active = "1";

@@ -16,7 +16,7 @@
                     <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
                         @if ($item->photo)
                             <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full"
-                                src="{{ asset('storage/photo_profil/' . $item->photo) }}">
+                                src="{{ asset('/foto/profil/'.Auth::user()->id.'/'. Auth::user()->name.'/'. $item->photo) }}">
                         @else
                             <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full"
                                 src="{{ asset('dist/images/' . $fakers[0]['photos'][0]) }}">

@@ -112,7 +112,7 @@
 
                                     <td class="border-b dark:border-dark-5">
                                         <p class="text-gray-900 whitespace-no-wrap">
-                                            <a href="{{url('admin/investor/'.$item->id_anggota.'/detail')}}" style="background-color: #4299e1;" class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                            <a href="{{url('admin/investor/'.$item->id_anggota)}}" style="background-color: #4299e1;" class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                                                 Detail
                                             </a>
                                             <a href="{{url('admin/investor/'.$item->id_anggota.'/delete')}}" style="background-color: red;" class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">

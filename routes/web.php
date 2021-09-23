@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/klaim/dana', [AdminController::class, 'klaim_riwayat'])->name('klaim_dana');
     Route::get('/admin/klaim/{id}', [AdminController::class, 'konfirmasi_klaim']);
     
+    Route::get('/admin/investor/{id}', [AdminController::class, 'investor_profil']);
     
     
     // END
