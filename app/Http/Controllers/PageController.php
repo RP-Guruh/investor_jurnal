@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use App\Models\Pemasukan;
 use App\Models\FileLaporan;
 use App\Models\klaim_dana;
-
+use App\Models\point;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -33,7 +33,9 @@ class PageController extends Controller
         $jumlah_investor = User::where('status', 'investor')->count();
         $total_pendapatan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->sum('nominal');
         $riwayat_pemasukan = Pemasukan::where('id_anggota', Auth::user()->id_anggota)->orderBy('tanggal_pemasukan', 'DESC')->paginate(10);
-
+        $point = point::where('no_anggota', Auth::user()->id_anggota)->get();
+        
+        
         $jumlah_dana_investasi = User::where('status', 'investor')->sum('nominal_investasi');
         foreach ($user as $data) {
             $tgl_gabung = date("d-M-Y", strtotime($data->tanggal_bergabung));
@@ -50,6 +52,7 @@ class PageController extends Controller
             return view('pages/user_dashboard', [
                 'nominal_investasi' => number_format($nominal, 0, ',', '.'),
                 'nama' => $nama,
+                'point' => $point,
                 'tgl_gabung' => $tgl_gabung,
                 'total_pemasukan' => number_format($total_pendapatan - $dana_klaim, 0, ',', '.'),
                 'jumlah_pendapatan' => number_format($pendapatan_beserta_nominal, 0, ',', '.'),

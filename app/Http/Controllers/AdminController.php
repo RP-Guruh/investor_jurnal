@@ -8,6 +8,7 @@ use App\Models\Pemasukan;
 use App\Models\User;
 use App\Models\FileLaporan;
 use App\Models\klaim_dana;
+use App\Models\point;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,14 +20,14 @@ class AdminController extends Controller
         $user = User::where('status', 'investor')->orderBy('tanggal_bergabung', 'DESC')->paginate(10);
 
         // Menghitung dana investor terkumpul
-           $nominal_investasi =  User::where('status', 'investor')->sum('nominal_investasi');
-        
+        $nominal_investasi =  User::where('status', 'investor')->sum('nominal_investasi');
+
         // Menghitung jumlah investor terdaftar
-            $jumlah_investor =  User::where('status', 'investor')->count();
-          
+        $jumlah_investor =  User::where('status', 'investor')->count();
+
         return view('admin.dashboard', [
             'user' => $user,
-            'jumlah_nominal' => number_format( $nominal_investasi, 0, ',', '.'),
+            'jumlah_nominal' => number_format($nominal_investasi, 0, ',', '.'),
             'jumlah_investor' => $jumlah_investor,
         ]);
     }
@@ -75,16 +76,31 @@ class AdminController extends Controller
         $pemasukan->id_anggota = $request->id_anggota;
         $pemasukan->nominal = $request->nominal;
         $pemasukan->tanggal_pemasukan = $request->tgl_pemasukan;
-      
-        if($request->keterangan == null) {
+
+        if ($request->keterangan == null) {
+            $ket = "Tidak ada keterangan";
             $pemasukan->keterangan = "Tidak ada keterangan";
-        }
-        else {
+        } else {
+            $ket = $request->keterangan;
             $pemasukan->keterangan = $request->keterangan;
         }
+        $user = User::select('email')->where('id_anggota', $request->id_anggota)->get();
+        foreach($user as $data) {
+            $email_penerima = $data->email;
+        }
+        $details = [
+            'title' => 'Informasi pemasukan terbaru',
+            'body' => 'Berikut merupakan rincian pemasukan terbaru : ',
+            'id_pemasukan' => $string,
+            'nominal' => $request->nominal,
+            'tanggal' => $request->tgl_pemasukan,
+            'keterangan' => $ket,
+            ];
         
         $pemasukan->save();
-        toast("Data pemasukan berhasil di input", 'success');
+        \Mail::to($email_penerima)->send(new \App\Mail\PemasukanMail($details));
+       
+        toast("Data pemasukan berhasil di input & Pemberitahuan User Berhasil Dikirim", 'success');
         return redirect('/admin/pemasukan/' . $request->id_anggota);
     }
 
@@ -148,9 +164,32 @@ class AdminController extends Controller
         $file->id_laporan = $string;
         $file->link = $request->link_file;
         $file->tanggal_upload = $request->tgl_laporan;
-        $file->keterangan = $request->keterangan;
-        $file->save();
+        if ($request->keterangan == null) {
+            $ket = "Tidak ada keterangan";
+            $file->keterangan = "Tidak ada keterangan";
+        } else {
+            $ket = $request->keterangan;
+            $file->keterangan = $request->keterangan;
+        }
+     
+        
+        $user = User::select('email')->where('status', 'investor')->get();
 
+        $details = [
+            'title' => 'Informasi laporan keuangan terbaru',
+            'body' => 'Berikut merupakan informasi laporan terbaru : ',
+            'id_laporan' => $string,
+            'link' => $request->link_file,
+            'tanggal' => $request->tgl_laporan,
+            'keterangan' => $ket,
+            ];
+
+        foreach($user as $data) {
+            \Mail::to($data->email)->send(new \App\Mail\LaporanMail($details));
+        }          
+      
+ 
+        $file->save();
         toast("Data Laporan Berhasil Ditambah", 'success');
         return redirect('/admin/laporan/');
     }
@@ -177,17 +216,20 @@ class AdminController extends Controller
         return redirect('/admin/laporan');
     }
 
-    public function delete_laporan($id) {
+    public function delete_laporan($id)
+    {
         $file = FileLaporan::where('id_laporan', $id)->delete();
         alert()->success('Berhasil Hapus', 'Data laporan berhasil di hapus');
         return redirect('/admin/laporan');
     }
 
-    public function form_investor() {
+    public function form_investor()
+    {
         return view('admin.investor_form');
     }
 
-    public function add_investor(Request $request) {
+    public function add_investor(Request $request)
+    {
         $pin = mt_rand(10000, 99999)
             . mt_rand(10000, 99999);
         $string = "USER-" . str_shuffle($pin);
@@ -201,7 +243,7 @@ class AdminController extends Controller
         $user->password = Hash::make($request->password);
         $user->tanggal_bergabung = $request->tanggal_gabung;
         $user->active = "0";
-        
+
 
         $user->save();
 
@@ -209,7 +251,8 @@ class AdminController extends Controller
         return redirect('/admin');
     }
 
-    public function delete_investor($id) {
+    public function delete_investor($id)
+    {
         $user = User::where('id_anggota', $id)->delete();
         alert()->success('Berhasil Hapus', 'Data anggota investor berhasil di hapus');
         return redirect('/admin');
@@ -223,21 +266,71 @@ class AdminController extends Controller
         ]);
     }
 
-    public function konfirmasi_klaim($id) {
+    public function konfirmasi_klaim($id)
+    {
         klaim_dana::where('id_klaim', $id)
-        ->update(['updated_at' => date("Y/m/d"),
-                  'status' => "Disetujui"]);
-      
-        
+            ->update([
+                'updated_at' => date("Y/m/d"),
+                'status' => "Disetujui"
+            ]);
+
+
         alert()->success('Berhasil Disetujui', 'Pengajuan klaim dana di setujui');
         return redirect('admin/klaim/dana');
     }
 
-    public function investor_profil($id) {
+    public function investor_profil($id)
+    {
         $user = User::where('id_anggota', $id)->get();
         return view('admin.user_detail', [
             'user' => $user,
         ]);
+    }
 
+    public function point()
+    {
+        $user = User::where('status', 'investor')->paginate(10);
+
+        return view('admin.riwayat_point', [
+            'user' => $user,
+        ]);
+    }
+
+    public function point_update($id)
+    {
+        $point = point::where('no_anggota', $id)->get();
+        return view('admin.form_update_point', [
+            'point' => $point,
+            'id' => $id,
+        ]);
+    }
+
+    public function point_process(Request $request)
+    {
+        $point = point::where('no_anggota', $request->id)->get();
+
+        $simpan_point = new point();
+        if ($point->isEmpty()) {
+            $simpan_point->id = null;
+            $simpan_point->no_anggota = $request->id;
+            $simpan_point->point = $request->point;
+            $simpan_point->created_at = date("Y-m-d h:i:s");
+            $simpan_point->updated_at = date("Y-m-d h:i:s");
+            $simpan_point->save();
+            toast("Point investor berhasil ditambah", 'success');
+            return redirect('/admin/point/update/' . $request->id);
+        } else {
+            foreach ($point as $item) {
+                $point_current = $item->point;
+            }
+            $point_update = $point_current + $request->point;
+            $simpan_point::where('no_anggota', $request->id)
+                ->update([
+                    'updated_at' => date("Y-m-d h:i:s"),
+                    'point' => $point_update
+                ]);
+            toast("Point investor berhasil ditambah", 'success');
+            return redirect('/admin/point/update/' . $request->id);
+        }
     }
 }

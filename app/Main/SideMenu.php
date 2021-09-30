@@ -27,7 +27,6 @@ class SideMenu
                         ],
                     ],
 
-
                     'file-manager' => [
                         'icon' => 'hard-drive',
                         'route_name' => 'laporan_keuangan',
@@ -37,7 +36,7 @@ class SideMenu
                         'title' => 'Laporan Keuangan'
                     ],
                     
-                    'kalim_dana' => [
+                    'klaim_dana' => [
                         'icon' => 'hard-drive',
                         'route_name' => 'form_klaim',
                         'params' => [
@@ -53,6 +52,15 @@ class SideMenu
                         'icon' => 'trello',
                         'title' => 'Lihat Profil',
                         'route_name' => 'profil_user',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                    ],
+
+                    'Logout' => [
+                        'icon' => 'trello',
+                        'title' => 'Logout',
+                        'route_name' => 'logout',
                         'params' => [
                             'layout' => 'side-menu'
                         ],
@@ -96,6 +104,15 @@ class SideMenu
                         ],
                         'title' => 'Klaim Dana'
                     ],
+                    
+                    'test' => [
+                        'icon' => 'hard-drive',
+                        'route_name' => 'point',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                        'title' => 'Point'
+                    ],
 
                     'devider',
 
@@ -103,6 +120,15 @@ class SideMenu
                         'icon' => 'trello',
                         'title' => 'Tambah Investor',
                         'route_name' => 'tambah_investor',
+                        'params' => [
+                            'layout' => 'side-menu'
+                        ],
+                    ],
+
+                    'Logout' => [
+                        'icon' => 'trello',
+                        'title' => 'Logout',
+                        'route_name' => 'logout',
                         'params' => [
                             'layout' => 'side-menu'
                         ],

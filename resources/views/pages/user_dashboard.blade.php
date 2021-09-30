@@ -1,7 +1,7 @@
 @extends('../layout/' . $layout)
 
 @section('subhead')
-    <title>Dashboard - Icewall - Tailwind HTML Admin Template</title>
+    <title>Dashboard</title>
 @endsection
 
 @section('subcontent')
@@ -90,9 +90,16 @@
                         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                             <div class="report-box zoom-in">
                                 <div class="box p-5">
-                               <div class="text-3xl font-medium leading-8 mt-6">12</div>
+                                @forelse($point as $item)
+                                <div class="text-3xl font-medium leading-8 mt-6">{{$item->point}}</div>
                                     <div class="text-base text-gray-600 mt-1">Jumlah Point</div>
                                 </div>
+                                @empty
+                                <div class="text-3xl font-medium leading-8 mt-6">0</div>
+                                    <div class="text-base text-gray-600 mt-1">Jumlah Point</div>
+                                </div>
+                                @endforelse
+                               
                             </div>
                         </div>
                     </div>
