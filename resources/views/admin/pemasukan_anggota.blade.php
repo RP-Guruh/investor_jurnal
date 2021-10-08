@@ -19,24 +19,29 @@
 
                 <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto w-full">
                     <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                        <table class="min-w-full leading-normal">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
                                         No.
                                     </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
                                         ID Pemasukan
                                     </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
                                         Nominal
                                     </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
                                         Tanggal Pemasukan
                                     </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Actions
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Update
                                     </th>
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Hapus
+                                    </th>
+
+
 
                                 </tr>
                             </thead>
@@ -57,32 +62,40 @@
 
 
                                 <tr class="text-black font-bold">
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <td class="border-b dark:border-dark-5">
                                         <p class="text-gray-900 whitespace-no-wrap">
                                             {{ $pemasukan->firstItem() + $no }}
                                         </p>
                                     </td>
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <td class="border-b dark:border-dark-5">
                                         <p class="text-gray-900 whitespace-no-wrap">
                                             {{ $item->id_pemasukan }}
                                         </p>
                                     </td>
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <td class="border-b dark:border-dark-5">
                                         <p class="text-gray-900 whitespace-no-wrap">
                                             {{ $item->nominal }}
                                         </p>
                                     </td>
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <td class="border-b dark:border-dark-5">
                                         <p class="text-gray-900 whitespace-no-wrap">
                                             {{ Carbon\Carbon::parse($item->tanggal_pemasukan)->format('d-M-Y') }}
                                         </p>
                                     </td>
 
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <td class="border-b dark:border-dark-5">
                                         <p class="text-gray-900 whitespace-no-wrap">
                                             <a href="{{url('admin/pemasukan/'.$item->id_pemasukan.'/edit/'.$id_anggota)}}" style="background-color: #4299e1;" class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                                                 Edit
                                             </a>
+
+
+                                        </p>
+                                    </td>
+
+                                    <td class="border-b dark:border-dark-5">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+
                                             <a href="{{url('admin/pemasukan/'.$item->id_pemasukan.'/delete/'.$id_anggota)}}" style="background-color: #e53e3e;" class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                                                 Hapus
                                             </a>
@@ -98,7 +111,7 @@
 
                     </div>
                 </div>
-
+                {{ $pemasukan->links() }}
             </div>
 
         </div>

@@ -38,15 +38,22 @@
                     @endforelse
 
 
-                    <div>
-                        <label for="crud-form-1" class="form-label">Point update | Point akan dijumlahkan otomatis</label>
+                    <div class="mb-6 mt-6">
+                        <label for="crud-form-1" class="form-label">Point update</label>
                         <input name="point" id="crud-form-1" type="text" class="form-control w-full" required>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="crud-form-1" class="form-label">Action (Pilih Salah Satu) </label>
+                        <br>
+                        <input name="actions" value="+" type="radio" class="form-radio h-5 w-5 text-red-600" checked><span class="ml-2 text-gray-700">Tambah</span>
+                        <input name="actions" value="-" type="radio" class="form-radio h-5 w-5 text-red-600"><span class="ml-2 text-gray-700">Kurangi</span>
                     </div>
 
 
 
                     <div class="text-right mt-5">
-                        <a href="{{url('admin/')}}" class="btn btn-outline-secondary w-36 mr-1">Kembali ke menu utama</a>
+                        <a href="{{url('admin/point')}}" class="btn btn-outline-secondary w-36 mr-1">Kembali</a>
                         <button type="submit" class="btn btn-primary w-24">Update</button>
                     </div>
                 </form>

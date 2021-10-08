@@ -85,7 +85,7 @@ class AdminController extends Controller
             $pemasukan->keterangan = $request->keterangan;
         }
         $user = User::select('email')->where('id_anggota', $request->id_anggota)->get();
-        foreach($user as $data) {
+        foreach ($user as $data) {
             $email_penerima = $data->email;
         }
         $details = [
@@ -95,11 +95,11 @@ class AdminController extends Controller
             'nominal' => $request->nominal,
             'tanggal' => $request->tgl_pemasukan,
             'keterangan' => $ket,
-            ];
-        
+        ];
+
         $pemasukan->save();
         \Mail::to($email_penerima)->send(new \App\Mail\PemasukanMail($details));
-       
+
         toast("Data pemasukan berhasil di input & Pemberitahuan User Berhasil Dikirim", 'success');
         return redirect('/admin/pemasukan/' . $request->id_anggota);
     }
@@ -171,8 +171,8 @@ class AdminController extends Controller
             $ket = $request->keterangan;
             $file->keterangan = $request->keterangan;
         }
-     
-        
+
+
         $user = User::select('email')->where('status', 'investor')->get();
 
         $details = [
@@ -182,13 +182,13 @@ class AdminController extends Controller
             'link' => $request->link_file,
             'tanggal' => $request->tgl_laporan,
             'keterangan' => $ket,
-            ];
+        ];
 
-        foreach($user as $data) {
+        foreach ($user as $data) {
             \Mail::to($data->email)->send(new \App\Mail\LaporanMail($details));
-        }          
-      
- 
+        }
+
+
         $file->save();
         toast("Data Laporan Berhasil Ditambah", 'success');
         return redirect('/admin/laporan/');
@@ -323,14 +323,26 @@ class AdminController extends Controller
             foreach ($point as $item) {
                 $point_current = $item->point;
             }
-            $point_update = $point_current + $request->point;
-            $simpan_point::where('no_anggota', $request->id)
-                ->update([
-                    'updated_at' => date("Y-m-d h:i:s"),
-                    'point' => $point_update
-                ]);
-            toast("Point investor berhasil ditambah", 'success');
-            return redirect('/admin/point/update/' . $request->id);
+
+            if ($request->actions == "+") {
+                $point_update = $point_current + $request->point;
+                $simpan_point::where('no_anggota', $request->id)
+                    ->update([
+                        'updated_at' => date("Y-m-d h:i:s"),
+                        'point' => $point_update
+                    ]);
+                toast("Point investor berhasil ditambah", 'success');
+                return redirect('/admin/point/update/' . $request->id);
+            } else {
+                $point_update = $point_current - $request->point;
+                $simpan_point::where('no_anggota', $request->id)
+                    ->update([
+                        'updated_at' => date("Y-m-d h:i:s"),
+                        'point' => $point_update
+                    ]);
+                toast("Point investor berhasil dikurang", 'success');
+                return redirect('/admin/point/update/' . $request->id);
+            }
         }
     }
 }

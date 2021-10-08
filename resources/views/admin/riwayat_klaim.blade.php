@@ -17,9 +17,9 @@
         <div class="col-span-12 lg:col-span-12 mt-8">
             <div class="intro-y block sm:flex items-center h-10">
                 <h2 class="text-lg font-medium truncate mr-5">Riwayat Klaim Dana Investor</h2>
-                
+
             </div>
-         
+
             <h2 class="text-sm font-medium truncate mr-5 mt-2">Diurutkan dari data terbaru</h2>
             <div class="intro-y box p-5 mt-12 sm:mt-5">
 
@@ -30,7 +30,7 @@
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">No.</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">ID Anggota</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Nama Anggota</th>
-                                
+
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">ID Klaim</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Tanggal Klaim</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Nominal</th>
@@ -47,7 +47,7 @@
                                 </td>
                                 <td class="border-b dark:border-dark-5">{{ $item->id_anggota }}</td>
                                 <td class="border-b dark:border-dark-5">{{ $item->nama }}</td>
-                                
+
                                 <td class="border-b dark:border-dark-5">{{ $item->id_klaim }}</td>
                                 <td class="border-b dark:border-dark-5">
                                     {{ Carbon\Carbon::parse($item->tanggal_klaim)->format('d F Y') }}
@@ -56,7 +56,7 @@
                                 <td class="border-b dark:border-dark-5">{{ $item->keterangan }}</td>
                                 <td class="border-b dark:border-dark-5">{{ $item->status }}</td>
                                 <td class="border-b dark:border-dark-5"> <a href="{{url('/admin/klaim/'.$item->id_klaim)}}" class="btn btn-success w-30">Setujui Klaim</a></td>
-                                
+
                             </tr>
 
                             @empty
@@ -66,11 +66,11 @@
 
                         </tbody>
                     </table>
-                    
+
                 </div>
-                
+
             </div>
-            <br>
+
             {{ $klaim->links() }}
         </div>
 
